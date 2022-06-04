@@ -8,7 +8,7 @@ const width = 10;
 // The Elements
 const lTetromino = [
   [1, width+1, width*2+1, 2],
-  [width, width+1, width+2. width*2+2],
+  [width, width+1, width+2, width*2+2],
   [1, width+1, width*2, width*2+1],
   [width, width*2, width*2+1, width*2+2]
 ]
@@ -44,12 +44,20 @@ const tTetromino =[
 const theTetromino = [lTetromino, zTertomino, oTetromino, iTetromino, tTetromino]
 
 let currentPosition = 4;
-let current = theTetromino[0][0];
+let currentRotation = 0;
 
-//draw the first items
+
+// select random item
+let random = Math.floor(Math.random()*theTetromino.length);
+let current = theTetromino[random][currentRotation];
+
+//draw the item
 
 function draw () {
   current.forEach( index => {squares[currentPosition + index].classList.add('tetromino')})
 }
 
-draw();
+//undraw the item
+function undraw () {
+  current.forEach(index => {squares[currentPosition + index].classList.remove('tetromino')})
+}
