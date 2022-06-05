@@ -1,9 +1,10 @@
 const grid = document.querySelector('.grid');
 let squares = Array.from(document.querySelectorAll('.grid div'));
-const ScoreDisplay = document.querySelector('#score');
-const StartBtn = document.querySelector('#start-button');
+const scoreDisplay = document.querySelector('#score');
+const startBtn = document.querySelector('#start-button');
 const width = 10;
 let nextRandom = 0
+let timerId
 
 // The Elements
 const lTetromino = [
@@ -62,9 +63,6 @@ function undraw () {
   current.forEach(index => {squares[currentPosition + index].classList.remove('tetromino')})
 }
 
-
-//make the tetromino move down every second
-timerId = setInterval(moveDown, 1000);
 
 //assign functions to keyCodes
 function control(e) {
@@ -159,3 +157,16 @@ function displayShape() {
   displaySquares.forEach(squares => {squares.classList.remove('tetromino')})
   theNextTetromino[nextRandom].forEach( index => {displaySquares[displayIndex + index].classList.add('tetromino')})
 }
+
+//add functionality to the start/pasue button
+startBtn.addEventListener('click', () => {
+  if (timerId) {
+    clearInterval(timerId)
+    timerId = null
+  } else {
+    draw()
+    timerId = setInterval(moveDown, 1000)
+    nextRandom = Math.floor(Math.random()*theTetromino.length)
+    displayShape()
+  }
+})
